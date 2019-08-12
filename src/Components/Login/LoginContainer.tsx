@@ -1,5 +1,5 @@
 import React from "react";
-import AuthPresenter from "./AuthPresenter";
+import LoginPresenter from "./LoginPresenter";
 
 interface IState {
   username: string;
@@ -10,7 +10,7 @@ interface IProps {
   usernameLogin: (username: string, password: string) => void;
 }
 
-class AuthContainer extends React.Component<IProps, IState> {
+class LoginContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ class AuthContainer extends React.Component<IProps, IState> {
   public render() {
     const { username, password } = this.state;
     return (
-      <AuthPresenter
+      <LoginPresenter
         username={username}
         password={password}
         onChange={this.onChange}
@@ -58,4 +58,4 @@ class AuthContainer extends React.Component<IProps, IState> {
   }
 }
 
-export default AuthContainer;
+export default LoginContainer;

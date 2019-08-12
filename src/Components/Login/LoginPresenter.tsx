@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import FacebookLogin from "react-facebook-login";
 import Theme from "../../Styles/Theme";
-import "./Auth.css";
+import Helmet from "react-helmet";
+import "./Login.css";
 import { Facebook } from "../Icons/icons";
 import Input from "../Input";
-import Button from "src/Button";
+import Button from "src/Components/Button";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -42,6 +44,7 @@ const Form = styled.div`
   width: 600px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 `;
 const Column = styled.div`
   display: flex;
@@ -49,6 +52,13 @@ const Column = styled.div`
   width: 600px;
   margin-bottom: 25px;
 `;
+const ExLink = styled(Link)`
+  text-decoration: underline;
+  text-decoration-color: ${Theme.greyFontColor};
+  color: ${Theme.greyFontColor};
+  margin-left: 6px;
+`;
+
 interface IProps {
   username: string;
   password: string;
@@ -56,7 +66,7 @@ interface IProps {
   responseFacebook: (response: any) => void;
   onClickLogin: () => void;
 }
-const AuthPresenter: React.SFC<IProps> = ({
+const LoginPresenter: React.SFC<IProps> = ({
   username,
   password,
   onChange,
@@ -65,6 +75,9 @@ const AuthPresenter: React.SFC<IProps> = ({
 }) => {
   return (
     <Container>
+      <Helmet>
+        <title>로그인 | Wonsplash</title>
+      </Helmet>
       <Image src={require("../../images/logo.png")} />
       <Bold>Login</Bold>
       <Text>Welcome back</Text>
@@ -72,7 +85,7 @@ const AuthPresenter: React.SFC<IProps> = ({
         appId="475957043218096"
         autoLoad={false}
         fields="name,email,picture"
-        cssClass={"facebook-button"}
+        cssClass={"facebook-login"}
         icon={<Facebook />}
         callback={responseFacebook}
       >
@@ -85,6 +98,7 @@ const AuthPresenter: React.SFC<IProps> = ({
           <Input
             type={"text"}
             name={"username"}
+            customWidth={"100%"}
             value={username}
             onChange={onChange}
           />
@@ -94,6 +108,7 @@ const AuthPresenter: React.SFC<IProps> = ({
           <Input
             type={"password"}
             name={"password"}
+            customWidth={"100%"}
             value={password}
             onChange={onChange}
           />
@@ -107,8 +122,11 @@ const AuthPresenter: React.SFC<IProps> = ({
           textSize={"18px"}
         />
       </Form>
+      <Text>
+        Don't have an account?<ExLink to={"/join"}>Join</ExLink>
+      </Text>
     </Container>
   );
 };
 
-export default AuthPresenter;
+export default LoginPresenter;

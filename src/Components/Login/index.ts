@@ -1,4 +1,4 @@
-import AuthContainer from "./AuthContainer";
+import LoginContainer from "./LoginContainer";
 import { connect } from "react-redux";
 import { actionCreators as userActions } from "../../Redux/Modules/user";
 
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   null,
   mapDispatchToProps
-)(AuthContainer);
+)(LoginContainer);

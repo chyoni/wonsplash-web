@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Auth from "../Auth";
+import Login from "../Login";
+import Join from "../Join";
 import Feed from "../Feed";
 
 interface IProps {
@@ -23,7 +24,8 @@ const LoggedInRoutes = () => {
 const LoggedOutRoutes = () => {
   return (
     <Switch>
-      <Route exact={true} path={"/"} component={Auth} />
+      <Route exact={true} path={"/"} component={Login} />
+      <Route exact={true} path={"/join"} component={Join} />
     </Switch>
   );
 };

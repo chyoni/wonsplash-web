@@ -1,5 +1,5 @@
 import React from "react";
-import "../Auth/Auth.css";
+import "../Login/Login.css";
 
 export const Facebook = () => {
   return (

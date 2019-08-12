@@ -20,10 +20,11 @@ function facebookLogin(accessToken: string) {
       .post("/users/login/facebook/", {
         access_token: accessToken
       })
-      .then(res => {
+      .then(async res => {
         if (res.status === 200) {
           if (res.data && res.data.token) {
-            dispatch(saveToken(res.data.token));
+            await dispatch(saveToken(res.data.token));
+            window.location.href = "/";
           }
         }
       })
@@ -50,6 +51,31 @@ function usernameLogin(username: string, password: string) {
   };
 }
 
+function registration(
+  username: string,
+  password1: string,
+  password2: string,
+  email: string
+) {
+  return (dispatch: Dispatch) => {
+    axios
+      .post("/rest-auth/registration/", {
+        username,
+        password1,
+        password2,
+        email
+      })
+      .then(async res => {
+        if (res.status === 201) {
+          if (res.data && res.data.token) {
+            await dispatch(saveToken(res.data.token));
+            window.location.href = "/";
+          }
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 // initialState
 const initialState = {
   isLoggedIn: localStorage.getItem("jwt") ? true : false
@@ -78,7 +104,8 @@ function applySaveToken(state, action) {
 // exports
 export const actionCreators = {
   facebookLogin,
-  usernameLogin
+  usernameLogin,
+  registration
 };
 
 export default reducer;
