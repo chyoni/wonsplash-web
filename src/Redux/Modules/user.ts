@@ -6,10 +6,10 @@ import { Dispatch } from "redux";
 const SAVE_TOKEN = "SAVE_TOKEN";
 
 // Action
-function saveToken(token: string) {
+function saveToken(data: object) {
   return {
     type: SAVE_TOKEN,
-    token
+    data
   };
 }
 
@@ -23,7 +23,8 @@ function facebookLogin(accessToken: string) {
       .then(async res => {
         if (res.status === 200) {
           if (res.data && res.data.token) {
-            await dispatch(saveToken(res.data.token));
+            console.log(res);
+            await dispatch(saveToken(res.data));
             window.location.href = "/";
           }
         }
@@ -40,10 +41,9 @@ function usernameLogin(username: string, password: string) {
         password
       })
       .then(res => {
-        console.log(res);
         if (res.status === 200) {
           if (res.data && res.data.token) {
-            dispatch(saveToken(res.data.token));
+            dispatch(saveToken(res.data));
           }
         }
       })
@@ -68,7 +68,7 @@ function registration(
       .then(async res => {
         if (res.status === 201) {
           if (res.data && res.data.token) {
-            await dispatch(saveToken(res.data.token));
+            await dispatch(saveToken(res.data));
             window.location.href = "/";
           }
         }
@@ -78,7 +78,8 @@ function registration(
 }
 // initialState
 const initialState = {
-  isLoggedIn: localStorage.getItem("jwt") ? true : false
+  isLoggedIn: localStorage.getItem("jwt") ? true : false,
+  username: localStorage.getItem("username") || ""
 };
 
 // reducer
@@ -93,11 +94,15 @@ function reducer(state = initialState, action: any) {
 
 // reducer function
 function applySaveToken(state, action) {
-  const { token } = action;
+  const {
+    data: { token, user }
+  } = action;
+  localStorage.setItem("username", user.username);
   localStorage.setItem("jwt", token);
   return {
     ...state,
-    isLoggedIn: true
+    isLoggedIn: true,
+    username: user.username
   };
 }
 

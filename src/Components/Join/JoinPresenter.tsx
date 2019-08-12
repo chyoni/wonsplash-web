@@ -23,6 +23,7 @@ const PreImage = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  opacity: 0.7;
   width: 800px;
   transition: width 0.2s ease-in-out;
   @media (min-width: 2000px) {
