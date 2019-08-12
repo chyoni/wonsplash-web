@@ -54,16 +54,15 @@ interface IProps {
   password: string;
   onChange: (e: any) => void;
   responseFacebook: (response: any) => void;
+  onClickLogin: () => void;
 }
 const AuthPresenter: React.SFC<IProps> = ({
   username,
   password,
   onChange,
-  responseFacebook
+  responseFacebook,
+  onClickLogin
 }) => {
-  const onClickLogin = () => {
-    console.log("button click");
-  };
   return (
     <Container>
       <Image src={require("../../images/logo.png")} />
@@ -83,11 +82,21 @@ const AuthPresenter: React.SFC<IProps> = ({
       <Form>
         <Column>
           <Label>Username</Label>
-          <Input name={"username"} value={username} onChange={onChange} />
+          <Input
+            type={"text"}
+            name={"username"}
+            value={username}
+            onChange={onChange}
+          />
         </Column>
         <Column>
           <Label>Password</Label>
-          <Input name={"password"} value={password} onChange={onChange} />
+          <Input
+            type={"password"}
+            name={"password"}
+            value={password}
+            onChange={onChange}
+          />
         </Column>
         <Button
           width={"600px"}

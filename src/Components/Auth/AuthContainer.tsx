@@ -7,6 +7,7 @@ interface IState {
 }
 interface IProps {
   facebookLogin: (accessToken: any) => void;
+  usernameLogin: (username: string, password: string) => void;
 }
 
 class AuthContainer extends React.Component<IProps, IState> {
@@ -34,6 +35,15 @@ class AuthContainer extends React.Component<IProps, IState> {
     }
   };
 
+  public onClickLogin = () => {
+    const { username, password } = this.state;
+    const { usernameLogin } = this.props;
+    if (username === "" || password === "") {
+      return;
+    }
+    usernameLogin(username, password);
+  };
+
   public render() {
     const { username, password } = this.state;
     return (
@@ -41,6 +51,7 @@ class AuthContainer extends React.Component<IProps, IState> {
         username={username}
         password={password}
         onChange={this.onChange}
+        onClickLogin={this.onClickLogin}
         responseFacebook={this.responseFacebook}
       />
     );
