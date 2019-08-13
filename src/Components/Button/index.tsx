@@ -19,6 +19,7 @@ interface IProps {
   text: string;
   textSize: string;
   onClick: any;
+  className?: any;
 }
 const Button: React.SFC<IProps> = ({
   width,
@@ -26,10 +27,12 @@ const Button: React.SFC<IProps> = ({
   textColor,
   bgColor,
   textSize,
-  onClick
+  onClick,
+  className
 }) => {
   return (
     <Container
+      className={className}
       onClick={onClick}
       textColor={textColor}
       width={width}

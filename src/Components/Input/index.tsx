@@ -18,21 +18,27 @@ interface IProps {
   onChange: (e: any) => void;
   type?: string;
   customWidth: string;
+  className?: any;
+  placeholder?: string;
 }
 const Input: React.SFC<IProps> = ({
   name,
   onChange,
   value,
   type,
-  customWidth
+  customWidth,
+  placeholder,
+  className
 }) => {
   return (
     <Container
+      className={className}
       name={name}
       onChange={onChange}
       value={value}
       type={type}
       customWidth={customWidth}
+      placeholder={placeholder}
     />
   );
 };

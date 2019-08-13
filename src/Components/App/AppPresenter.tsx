@@ -3,14 +3,19 @@ import { Route, Switch } from "react-router-dom";
 import Login from "../Login";
 import Join from "../Join";
 import Feed from "../Feed";
+import Header from "../Header";
 
 interface IProps {
   isLoggedIn: boolean;
   pathname: string;
 }
 const AppPresenter: React.SFC<IProps> = ({ isLoggedIn, pathname }) => {
-  console.log(isLoggedIn);
-  return isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />;
+  return (
+    <>
+      {isLoggedIn ? <Header /> : null}
+      {isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}
+    </>
+  );
 };
 
 const LoggedInRoutes = () => {
