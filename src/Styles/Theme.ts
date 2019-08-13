@@ -8,5 +8,6 @@ export default {
   blueColor: "#4c66a4",
   maxWidth: "1295px",
   headerHight: "120px",
-  photoMaxWidth: "1230px"
+  photoMaxWidth: "1230px",
+  redColor: "#F15151"
 };

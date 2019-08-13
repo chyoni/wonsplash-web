@@ -104,6 +104,7 @@ const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
         {feedArray.map(collect => (
           <Photo
             key={collect.id}
+            id={collect.id}
             file={collect.file}
             isLiked={collect.is_liked}
             likeCount={collect.like_count}
