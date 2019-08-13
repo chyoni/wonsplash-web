@@ -81,7 +81,7 @@ const ExAvatar = styled(Avatar)`
   border-radius: 25px;
   margin-left: 15px;
 `;
-const EditorialLabel = styled<any>("span")`
+const FeedLabel = styled<any>("span")`
   color: ${props =>
     props.pathname === "/" ? Theme.blackFontColor : Theme.greyFontColor};
   font-size: 15px;
@@ -193,7 +193,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
       </HeaderTop>
       <HeaderBottom>
         <Link to={"/"}>
-          <EditorialLabel pathname={pathname}>Editorial</EditorialLabel>
+          <FeedLabel pathname={pathname}>Feed</FeedLabel>
         </Link>
         <Link to={"/following"}>
           <FollowingLabel pathname={pathname}>Following</FollowingLabel>

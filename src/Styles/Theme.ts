@@ -7,5 +7,6 @@ export default {
   borderColor: "#e6e6e6",
   blueColor: "#4c66a4",
   maxWidth: "1295px",
-  headerHight: "120px"
+  headerHight: "120px",
+  photoMaxWidth: "1230px"
 };
