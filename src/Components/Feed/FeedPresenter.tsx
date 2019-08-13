@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Theme from "src/Styles/Theme";
 import Input from "../Input";
+import Photo from "../Photo";
 
 const Background = styled.div`
   background-image: url("https://images.unsplash.com/photo-1516724562728-afc824a36e84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80");
@@ -67,15 +68,14 @@ const FeedContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(400px, auto);
   margin: 60px auto;
   min-height: 500px;
   max-width: ${Theme.photoMaxWidth};
-  background-color: grey;
 `;
 interface IProps {
   term: string;
-  feedArray: Array<[any]>;
+  feedArray: any;
   onChange: (e) => void;
 }
 const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
@@ -100,7 +100,20 @@ const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
           <Creator>Created by 원이</Creator>
         </BottomBox>
       </Background>
-      <FeedContainer />
+      <FeedContainer>
+        {feedArray.map(collect => (
+          <Photo
+            key={collect.id}
+            file={collect.file}
+            isLiked={collect.is_liked}
+            likeCount={collect.like_count}
+            createdAt={collect.natural_time}
+            tags={collect.tags}
+            views={collect.views}
+            creator={collect.creator}
+          />
+        ))}
+      </FeedContainer>
     </>
   );
 };
