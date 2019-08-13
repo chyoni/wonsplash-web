@@ -75,9 +75,10 @@ const FeedContainer = styled.div`
 `;
 interface IProps {
   term: string;
+  feedArray: Array<[any]>;
   onChange: (e) => void;
 }
-const FeedPresenter: React.SFC<IProps> = ({ term, onChange }) => {
+const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
   return (
     <>
       <Background>

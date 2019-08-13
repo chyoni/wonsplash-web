@@ -1,5 +1,6 @@
 import React from "react";
 import FeedPresenter from "./FeedPresenter";
+import Loader from "../Loader";
 
 interface IState {
   term: string;
@@ -41,9 +42,16 @@ class FeedContainer extends React.Component<IProps, IState> {
   public render() {
     const { term, loading } = this.state;
     if (loading) {
-      return null;
+      return <Loader />;
     } else {
-      return <FeedPresenter term={term} onChange={this.onChange} />;
+      const { feedArray } = this.props;
+      return (
+        <FeedPresenter
+          term={term}
+          onChange={this.onChange}
+          feedArray={feedArray}
+        />
+      );
     }
   }
 }
