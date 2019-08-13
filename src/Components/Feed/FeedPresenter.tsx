@@ -10,6 +10,7 @@ const Background = styled.div`
   width: 100%;
   height: 600px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -19,6 +20,18 @@ const InnerBox = styled.div`
   min-height: 400px;
   display: flex;
   flex-direction: column;
+  margin: 80px 0;
+`;
+const BottomBox = styled.div`
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const Creator = styled.span`
+  font-size: 13px;
+  color: ${Theme.greyFontColor};
 `;
 const Bold = styled.span`
   font-size: 46px;
@@ -50,6 +63,16 @@ const ExInput = styled(Input)`
     font-size: 15px;
   }
 `;
+const FeedContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  grid-auto-rows: minmax(100px, auto);
+  margin: 60px auto;
+  min-height: 500px;
+  max-width: ${Theme.photoMaxWidth};
+  background-color: grey;
+`;
 interface IProps {
   term: string;
   onChange: (e) => void;
@@ -72,7 +95,11 @@ const FeedPresenter: React.SFC<IProps> = ({ term, onChange }) => {
             />
           </InputColumn>
         </InnerBox>
+        <BottomBox>
+          <Creator>Created by 원이</Creator>
+        </BottomBox>
       </Background>
+      <FeedContainer />
     </>
   );
 };

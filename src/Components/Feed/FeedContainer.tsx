@@ -3,12 +3,18 @@ import FeedPresenter from "./FeedPresenter";
 
 interface IState {
   term: string;
+  loading: boolean;
 }
-class FeedContainer extends React.Component<{}, IState> {
+interface IProps {
+  feed: () => void;
+  feedArray: any;
+}
+class FeedContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      term: ""
+      term: "",
+      loading: true
     };
   }
 
@@ -21,9 +27,24 @@ class FeedContainer extends React.Component<{}, IState> {
     } as any);
   };
 
+  public componentDidMount() {
+    const { feed } = this.props;
+    feed();
+  }
+
+  public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
+    if (nextProps.feedArray) {
+      this.setState({ loading: false });
+    }
+  }
+
   public render() {
-    const { term } = this.state;
-    return <FeedPresenter term={term} onChange={this.onChange} />;
+    const { term, loading } = this.state;
+    if (loading) {
+      return null;
+    } else {
+      return <FeedPresenter term={term} onChange={this.onChange} />;
+    }
   }
 }
 

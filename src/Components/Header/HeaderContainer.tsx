@@ -43,7 +43,6 @@ class HeaderContainer extends React.Component<IProps, IState> {
 
   public render() {
     const { pathname } = this.props;
-    console.log(pathname);
     const { term, loading } = this.state;
     if (loading) {
       return null;
