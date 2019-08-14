@@ -14,12 +14,18 @@ interface IFeedArray {
 
 // actionTypes
 const FEED = "FEED";
-
+const TOGGLE_LIKE = "TOGGLE_LIKE";
 // action
 function saveFeed(data: Array<[IFeedArray]>) {
   return {
     type: FEED,
     data
+  };
+}
+function saveToggleLikePhoto(imageId: number) {
+  return {
+    type: TOGGLE_LIKE,
+    imageId
   };
 }
 
@@ -45,6 +51,44 @@ function feed() {
       .catch(err => console.log(err));
   };
 }
+function likePhoto(imageId: number) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .post(`/collects/like/${imageId}/`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 201) {
+          dispatch(saveToggleLikePhoto(imageId));
+        } else {
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+function unlikePhoto(imageId: number) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .delete(`/collects/unlike/${imageId}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveToggleLikePhoto(imageId));
+        } else {
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 
 // initialState
 const initialState = {
@@ -55,6 +99,8 @@ function reducer(state = initialState, action: any) {
   switch (action.type) {
     case FEED:
       return applySaveFeed(state, action);
+    case TOGGLE_LIKE:
+      return applyToggleLikePhoto(state, action);
     default:
       return state;
   }
@@ -68,10 +114,28 @@ function applySaveFeed(state, action) {
     feedArray: data
   };
 }
+function applyToggleLikePhoto(state, action) {
+  const { imageId } = action;
+  return {
+    ...state,
+    feedArray: [
+      ...state.feedArray.map(photo => {
+        if (photo.id === imageId) {
+          photo.is_liked = !photo.is_liked;
+          return photo;
+        } else {
+          return photo;
+        }
+      })
+    ]
+  };
+}
 
 // actionCreators
 export const actionCreators = {
-  feed
+  feed,
+  likePhoto,
+  unlikePhoto
 };
 // exports
 export default reducer;

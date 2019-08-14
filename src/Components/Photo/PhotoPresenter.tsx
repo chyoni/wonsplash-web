@@ -35,10 +35,12 @@ const HeartBox = styled<any>("div")`
   padding: 16px 14px;
   justify-content: center;
   border-radius: 7px;
+  transition: background-color 0.2s linear;
   background-color: ${props =>
     props.isLiked ? Theme.redColor : Theme.whiteFontColor};
   margin-right: 10px;
   svg {
+    transition: fill 0.2s ease;
     fill: ${props => (props.isLiked ? Theme.whiteFontColor : Theme.redColor)};
   }
 `;
@@ -82,34 +84,25 @@ interface IProps {
   id: number;
   file: string;
   isLiked: boolean;
-  likeCount: number;
-  createdAt: string;
-  tags: any;
-  views: number;
   creator: {
     id: string;
     avatar: string;
     username: string;
   };
+  onClickHeart: () => void;
 }
 const Photo: React.SFC<IProps> = ({
   id,
   file,
   isLiked,
-  likeCount,
-  createdAt,
-  tags,
-  views,
-  creator
+  creator,
+  onClickHeart
 }) => {
-  const onClick = () => {
-    console.log("heart");
-  };
   return (
     <Container file={file}>
       <Overlay>
         <Top>
-          <HeartBox onClick={onClick} isLiked={isLiked}>
+          <HeartBox onClick={onClickHeart} isLiked={isLiked}>
             <Heart />
           </HeartBox>
           <Link to={`/photo/${id}`}>
