@@ -1,6 +1,22 @@
 // import
 import axios from "axios";
 import { Dispatch } from "redux";
+import { IDetailPhoto } from "./collect";
+// types
+export interface IProfile {
+  id: number;
+  username: string;
+  avatar: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  followers_count: number;
+  following_count: number;
+  is_following: boolean;
+  is_self: boolean;
+  post_count: number;
+  images: Array<[IDetailPhoto]>;
+}
 
 // actionsTypes
 const SAVE_TOKEN = "SAVE_TOKEN";
@@ -13,7 +29,7 @@ function saveToken(data: object) {
     data
   };
 }
-function saveProfile(data: object) {
+function saveProfile(data: IProfile) {
   return {
     type: PROFILE,
     data

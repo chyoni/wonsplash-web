@@ -1,27 +1,26 @@
-import FeedContainer from "./FeedContainer";
+import SearchContainer from "./SearchContainer";
 import { connect } from "react-redux";
 import { actionCreators as collectActions } from "src/Redux/Modules/collect";
 
 const mapStateToProps = (state, ownProps) => {
+  const { history } = ownProps;
   const {
-    collect: { feedArray },
-    router
+    collect: { searchPhotos }
   } = state;
   return {
-    feedArray,
-    router
+    history,
+    searchPhotos
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    feed: () => {
-      dispatch(collectActions.feed());
+    searchByTerm: (term: string) => {
+      dispatch(collectActions.searchByTerm(term));
     }
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeedContainer);
+)(SearchContainer);

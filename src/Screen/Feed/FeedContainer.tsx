@@ -9,6 +9,8 @@ interface IState {
 interface IProps {
   feed: () => void;
   feedArray: any;
+  router: any;
+  history: any;
 }
 class FeedContainer extends React.Component<IProps, IState> {
   constructor(props) {
@@ -26,6 +28,15 @@ class FeedContainer extends React.Component<IProps, IState> {
     this.setState({
       [name]: value
     } as any);
+  };
+
+  public handleKeyPress = e => {
+    const { history } = this.props;
+    const { term } = this.state;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      history.push(`/search?term=${term}`);
+    }
   };
 
   public componentDidMount() {
@@ -48,6 +59,7 @@ class FeedContainer extends React.Component<IProps, IState> {
       return (
         <FeedPresenter
           term={term}
+          onKeyPress={this.handleKeyPress}
           onChange={this.onChange}
           feedArray={feedArray}
         />

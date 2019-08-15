@@ -1,17 +1,9 @@
 // import
 import axios from "axios";
 import { Dispatch } from "redux";
-interface IFeedArray {
-  id: number;
-  creator: object;
-  file: string;
-  is_liked: boolean;
-  like_count: number;
-  natural_time: string;
-  tags: any;
-  views: number;
-}
-interface IDetailPhoto {
+
+// types
+export interface IDetailPhoto {
   id: number;
   file: string;
   creator: {
@@ -30,8 +22,9 @@ interface IDetailPhoto {
 const FEED = "FEED";
 const TOGGLE_LIKE = "TOGGLE_LIKE";
 const DETAIL = "DETAIL";
+const SEARCH = "SEARCH";
 // action
-function saveFeed(data: Array<[IFeedArray]>) {
+function saveFeed(data: IDetailPhoto[]) {
   return {
     type: FEED,
     data
@@ -46,6 +39,12 @@ function saveToggleLikePhoto(imageId: number) {
 function saveDetailPhoto(data: IDetailPhoto) {
   return {
     type: DETAIL,
+    data
+  };
+}
+function saveSearchPhoto(data: IDetailPhoto[]) {
+  return {
+    type: SEARCH,
     data
   };
 }
@@ -129,6 +128,25 @@ function detailPhoto(imageId: number) {
       .catch(err => console.log(err));
   };
 }
+function searchByTerm(term: string) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .get(`/collects/search/?term=${term}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveSearchPhoto(res.data));
+        } else {
+          console.log("error =>", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 
 // initialState
 const initialState = {
@@ -143,6 +161,8 @@ function reducer(state = initialState, action: any) {
       return applyToggleLikePhoto(state, action);
     case DETAIL:
       return applyDetailPhoto(state, action);
+    case SEARCH:
+      return applySearchPhoto(state, action);
     default:
       return state;
   }
@@ -218,13 +238,21 @@ function applyDetailPhoto(state, action) {
     photo: data
   };
 }
+function applySearchPhoto(state, action) {
+  const { data } = action;
+  return {
+    ...state,
+    searchPhotos: data
+  };
+}
 
 // actionCreators
 export const actionCreators = {
   feed,
   likePhoto,
   unlikePhoto,
-  detailPhoto
+  detailPhoto,
+  searchByTerm
 };
 // exports
 export default reducer;

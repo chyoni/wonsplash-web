@@ -76,9 +76,15 @@ const FeedContainer = styled.div`
 interface IProps {
   term: string;
   feedArray: any;
+  onKeyPress: (e) => void;
   onChange: (e) => void;
 }
-const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
+const FeedPresenter: React.SFC<IProps> = ({
+  term,
+  onChange,
+  feedArray,
+  onKeyPress
+}) => {
   return (
     <>
       <Background>
@@ -90,6 +96,7 @@ const FeedPresenter: React.SFC<IProps> = ({ term, onChange, feedArray }) => {
             <ExInput
               name={"term"}
               value={term}
+              onKeyPress={onKeyPress}
               placeholder={"Search free high-resolution photos"}
               onChange={onChange}
               customWidth={"200px"}

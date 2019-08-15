@@ -4,6 +4,7 @@ import Login from "../../Screen/Login";
 import Join from "../../Screen/Join";
 import Feed from "../../Screen/Feed";
 import Header from "../Header";
+import Search from "src/Screen/Search";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -22,6 +23,7 @@ const LoggedInRoutes = () => {
   return (
     <Switch>
       <Route exact={true} path={"/"} component={Feed} />
+      <Route exact={true} path={"/search"} component={Search} />
     </Switch>
   );
 };
