@@ -1,26 +1,25 @@
-import HeaderContainer from "./HeaderContainer";
+import MyContainer from "./MyContainer";
 import { connect } from "react-redux";
-import { push } from "react-router-redux";
 import { actionCreators as userActions } from "src/Redux/Modules/user";
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    user: { username, who },
-    router: { location }
+    user: { username, who, myLikePhotos }
   } = state;
   return {
     username,
     who,
-    location
+    myLikePhotos
   };
 };
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    profile: (username: string) => {
+    myProfile: (username: string) => {
       dispatch(userActions.profile(username));
     },
-    goSearch: (term: string) => {
-      dispatch(push(`/search?term=${term}`));
+    myLikes: () => {
+      dispatch(userActions.myLikes());
     }
   };
 };
@@ -28,4 +27,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HeaderContainer);
+)(MyContainer);

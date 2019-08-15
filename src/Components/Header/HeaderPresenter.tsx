@@ -155,7 +155,7 @@ const DivideLine = styled.div`
 
 interface IProps {
   term: string;
-  my: any;
+  who: any;
   location: any;
   handleKeyPress: (e) => void;
   onChange: (e) => void;
@@ -163,7 +163,7 @@ interface IProps {
 const HeaderPresenter: React.SFC<IProps> = ({
   term,
   onChange,
-  my,
+  who,
   location,
   handleKeyPress
 }) => {
@@ -197,8 +197,8 @@ const HeaderPresenter: React.SFC<IProps> = ({
             bgColor={Theme.whiteFontColor}
             onClick={null}
           />
-          <Link to={"/profile"}>
-            <ExAvatar uri={my.avatar} />
+          <Link to={"/my"}>
+            <ExAvatar uri={who.avatar} />
           </Link>
         </TopThird>
       </HeaderTop>

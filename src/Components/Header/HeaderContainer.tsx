@@ -3,7 +3,7 @@ import HeaderPresenter from "./HeaderPresenter";
 
 interface IProps {
   username: string;
-  my: object;
+  who: object;
   location: any;
   profile: (username: any) => void;
   goSearch: (term: string) => void;
@@ -28,7 +28,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
 
   // will deprecated funtion at v17~
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
-    if (nextProps && nextProps.my) {
+    if (nextProps && nextProps.who) {
       this.setState({ loading: false });
     }
   }
@@ -57,13 +57,13 @@ class HeaderContainer extends React.Component<IProps, IState> {
     if (loading) {
       return null;
     } else {
-      const { my } = this.props;
+      const { who } = this.props;
       return (
         <HeaderPresenter
           term={term}
           onChange={this.onChange}
           handleKeyPress={this.handleKeyPress}
-          my={my}
+          who={who}
           location={location}
         />
       );

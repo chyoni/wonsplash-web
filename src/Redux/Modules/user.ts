@@ -17,11 +17,28 @@ export interface IProfile {
   post_count: number;
   images: Array<[IDetailPhoto]>;
 }
-
+export interface IMyLikes {
+  id: number;
+  natural_time: string;
+  image: {
+    id: number;
+    file: string;
+    creator: {
+      id: number;
+      username: string;
+      avatar: string;
+    };
+    is_liked: boolean;
+    like_count: number;
+    natural_time: string;
+    tags: any;
+    views: number;
+  };
+}
 // actionsTypes
 const SAVE_TOKEN = "SAVE_TOKEN";
 const PROFILE = "PROFILE";
-
+const MY_LIKES = "MY_LIKES";
 // Action
 function saveToken(data: object) {
   return {
@@ -35,7 +52,12 @@ function saveProfile(data: IProfile) {
     data
   };
 }
-
+function saveMyLikes(data: IMyLikes[]) {
+  return {
+    type: MY_LIKES,
+    data
+  };
+}
 // API actions
 function facebookLogin(accessToken: string) {
   return (dispatch: Dispatch) => {
@@ -55,7 +77,6 @@ function facebookLogin(accessToken: string) {
       .catch(err => console.log(err));
   };
 }
-
 function usernameLogin(username: string, password: string) {
   return (dispatch: Dispatch) => {
     axios
@@ -73,7 +94,6 @@ function usernameLogin(username: string, password: string) {
       .catch(err => console.log(err));
   };
 }
-
 function registration(
   username: string,
   password1: string,
@@ -99,7 +119,6 @@ function registration(
       .catch(err => console.log(err));
   };
 }
-
 function profile(username: string) {
   return (dispatch: Dispatch) => {
     const token = localStorage.getItem("jwt");
@@ -121,13 +140,30 @@ function profile(username: string) {
       .catch(err => console.log(err));
   };
 }
-
+function myLikes() {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .get("/users/mylikes/", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveMyLikes(res.data));
+        } else {
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 // initialState
 const initialState = {
   isLoggedIn: localStorage.getItem("jwt") ? true : false,
   username: localStorage.getItem("username") || ""
 };
-
 // reducer
 function reducer(state = initialState, action: any) {
   switch (action.type) {
@@ -135,11 +171,12 @@ function reducer(state = initialState, action: any) {
       return applySaveToken(state, action);
     case PROFILE:
       return applyProfile(state, action);
+    case MY_LIKES:
+      return applyMyLikes(state, action);
     default:
       return state;
   }
 }
-
 // reducer function
 function applySaveToken(state, action) {
   const {
@@ -154,19 +191,26 @@ function applySaveToken(state, action) {
   };
 }
 function applyProfile(state, action) {
-  const { data: my } = action;
+  const { data: who } = action;
   return {
     ...state,
-    my
+    who
   };
 }
-
+function applyMyLikes(state, action) {
+  const { data } = action;
+  return {
+    ...state,
+    myLikePhotos: data
+  };
+}
 // exports
 export const actionCreators = {
   facebookLogin,
   usernameLogin,
   registration,
-  profile
+  profile,
+  myLikes
 };
 
 export default reducer;
