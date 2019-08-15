@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Theme from "src/Styles/Theme";
-import Input from "../Input";
-import Photo from "../Photo";
+import Input from "../../Components/Input";
+import Photo from "../../Components/Photo";
 
 const Background = styled.div`
   background-image: url("https://images.unsplash.com/photo-1516724562728-afc824a36e84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80");

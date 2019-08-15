@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Login from "../Login";
-import Join from "../Join";
-import Feed from "../Feed";
+import Login from "../../Screen/Login";
+import Join from "../../Screen/Join";
+import Feed from "../../Screen/Feed";
 import Header from "../Header";
 
 interface IProps {

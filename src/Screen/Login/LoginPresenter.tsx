@@ -4,8 +4,8 @@ import FacebookLogin from "react-facebook-login";
 import Theme from "../../Styles/Theme";
 import Helmet from "react-helmet";
 import "./Login.css";
-import { Facebook } from "../Icons/icons";
-import Input from "../Input";
+import { Facebook } from "../../Components/Icons/icons";
+import Input from "../../Components/Input";
 import Button from "src/Components/Button";
 import { Link } from "react-router-dom";
 

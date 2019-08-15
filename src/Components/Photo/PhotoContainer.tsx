@@ -19,10 +19,21 @@ interface IProps {
   unlikePhoto: () => void;
 }
 
-class PhotoContainer extends React.Component<IProps, {}> {
+interface IState {
+  isOpen: boolean;
+}
+class PhotoContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
+    this.state = {
+      isOpen: false
+    };
   }
+  public toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  };
 
   public onClickHeart = () => {
     const { isLiked, likePhoto, unlikePhoto } = this.props;
@@ -35,6 +46,7 @@ class PhotoContainer extends React.Component<IProps, {}> {
 
   public render() {
     const { id, file, isLiked, creator } = this.props;
+    const { isOpen } = this.state;
     return (
       <PhotoPresenter
         id={id}
@@ -42,6 +54,8 @@ class PhotoContainer extends React.Component<IProps, {}> {
         isLiked={isLiked}
         creator={creator}
         onClickHeart={this.onClickHeart}
+        isOpen={isOpen}
+        toggleModal={this.toggleModal}
       />
     );
   }

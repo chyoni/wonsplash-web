@@ -1,6 +1,6 @@
 import React from "react";
 import FeedPresenter from "./FeedPresenter";
-import Loader from "../Loader";
+import Loader from "../../Components/Loader";
 
 interface IState {
   term: string;

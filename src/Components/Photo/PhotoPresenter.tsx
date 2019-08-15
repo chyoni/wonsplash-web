@@ -4,6 +4,7 @@ import { Heart, View } from "../Icons/icons";
 import Theme from "src/Styles/Theme";
 import Avatar from "../Avatar";
 import { Link } from "react-router-dom";
+import PhotoModal from "../PhotoModal";
 
 const Overlay = styled.div`
   width: 100%;
@@ -50,7 +51,7 @@ const ViewBox = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 7px;
-  padding: 7px 10px;
+  padding: 16px 10px;
 `;
 const Container = styled<any>("div")`
   width: 100%;
@@ -84,6 +85,8 @@ interface IProps {
   id: number;
   file: string;
   isLiked: boolean;
+  isOpen: boolean;
+  toggleModal: () => void;
   creator: {
     id: string;
     avatar: string;
@@ -96,7 +99,9 @@ const Photo: React.SFC<IProps> = ({
   file,
   isLiked,
   creator,
-  onClickHeart
+  onClickHeart,
+  isOpen,
+  toggleModal
 }) => {
   return (
     <Container file={file}>
@@ -105,11 +110,9 @@ const Photo: React.SFC<IProps> = ({
           <HeartBox onClick={onClickHeart} isLiked={isLiked}>
             <Heart />
           </HeartBox>
-          <Link to={`/photo/${id}`}>
-            <ViewBox>
-              <View />
-            </ViewBox>
-          </Link>
+          <ViewBox onClick={toggleModal}>
+            <View />
+          </ViewBox>
         </Top>
         <Bottom>
           <Link to={`/profile/${creator.username}`}>
@@ -120,6 +123,7 @@ const Photo: React.SFC<IProps> = ({
           </Link>
         </Bottom>
       </Overlay>
+      {isOpen ? <PhotoModal toggleModal={toggleModal} photoId={id} /> : null}
     </Container>
   );
 };

@@ -4,10 +4,10 @@ import styled from "styled-components";
 import Theme from "src/Styles/Theme";
 import { Link } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
-import { Facebook } from "../Icons/icons";
+import { Facebook } from "../../Components/Icons/icons";
 import "./Join.css";
-import Input from "../Input";
-import Button from "../Button";
+import Input from "../../Components/Input";
+import Button from "../../Components/Button";
 
 const Container = styled.div`
   position: absolute;
