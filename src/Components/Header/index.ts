@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     username,
     my,
-    pathname: location.pathname
+    location
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

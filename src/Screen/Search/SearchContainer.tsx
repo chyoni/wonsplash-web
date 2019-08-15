@@ -33,7 +33,6 @@ class SearchContainer extends React.Component<IProps, IState> {
   }
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
     const { router, searchByTerm } = this.props;
-    console.log(nextProps, router);
     if (nextProps && nextProps.searchPhotos) {
       this.setState({
         loading: false

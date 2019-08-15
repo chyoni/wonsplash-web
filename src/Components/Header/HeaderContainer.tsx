@@ -4,7 +4,7 @@ import HeaderPresenter from "./HeaderPresenter";
 interface IProps {
   username: string;
   my: object;
-  pathname: string;
+  location: any;
   profile: (username: any) => void;
   goSearch: (term: string) => void;
 }
@@ -52,7 +52,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
   };
 
   public render() {
-    const { pathname } = this.props;
+    const { location } = this.props;
     const { term, loading } = this.state;
     if (loading) {
       return null;
@@ -64,7 +64,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
           onChange={this.onChange}
           handleKeyPress={this.handleKeyPress}
           my={my}
-          pathname={pathname}
+          location={location}
         />
       );
     }

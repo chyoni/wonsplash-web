@@ -83,7 +83,9 @@ const ExAvatar = styled(Avatar)`
 `;
 const FeedLabel = styled<any>("span")`
   color: ${props =>
-    props.pathname === "/" ? Theme.blackFontColor : Theme.greyFontColor};
+    props.location.pathname === "/"
+      ? Theme.blackFontColor
+      : Theme.greyFontColor};
   font-size: 15px;
   margin-right: 15px;
   cursor: pointer;
@@ -94,7 +96,7 @@ const FeedLabel = styled<any>("span")`
 `;
 const FollowingLabel = styled<any>("span")`
   color: ${props =>
-    props.pathname === "/following"
+    props.location.pathname === "/following"
       ? Theme.blackFontColor
       : Theme.greyFontColor};
   font-size: 15px;
@@ -107,7 +109,9 @@ const FollowingLabel = styled<any>("span")`
 `;
 const NatureLabel = styled<any>("span")`
   color: ${props =>
-    props.pathname === "/nature" ? Theme.blackFontColor : Theme.greyFontColor};
+    props.location.search === "?term=nature"
+      ? Theme.blackFontColor
+      : Theme.greyFontColor};
   font-size: 15px;
   margin-right: 15px;
   cursor: pointer;
@@ -118,7 +122,9 @@ const NatureLabel = styled<any>("span")`
 `;
 const FashionLabel = styled<any>("span")`
   color: ${props =>
-    props.pathname === "/fashion" ? Theme.blackFontColor : Theme.greyFontColor};
+    props.location.search === "?term=fashion"
+      ? Theme.blackFontColor
+      : Theme.greyFontColor};
   font-size: 15px;
   margin-right: 15px;
   cursor: pointer;
@@ -129,7 +135,9 @@ const FashionLabel = styled<any>("span")`
 `;
 const AnimalLabel = styled<any>("span")`
   color: ${props =>
-    props.pathname === "/animal" ? Theme.blackFontColor : Theme.greyFontColor};
+    props.location.search === "?term=animal"
+      ? Theme.blackFontColor
+      : Theme.greyFontColor};
   font-size: 15px;
   margin-right: 15px;
   cursor: pointer;
@@ -148,7 +156,7 @@ const DivideLine = styled.div`
 interface IProps {
   term: string;
   my: any;
-  pathname: string;
+  location: any;
   handleKeyPress: (e) => void;
   onChange: (e) => void;
 }
@@ -156,7 +164,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
   term,
   onChange,
   my,
-  pathname,
+  location,
   handleKeyPress
 }) => {
   return (
@@ -196,20 +204,20 @@ const HeaderPresenter: React.SFC<IProps> = ({
       </HeaderTop>
       <HeaderBottom>
         <Link to={"/"}>
-          <FeedLabel pathname={pathname}>Feed</FeedLabel>
+          <FeedLabel location={location}>Feed</FeedLabel>
         </Link>
         <Link to={"/following"}>
-          <FollowingLabel pathname={pathname}>Following</FollowingLabel>
+          <FollowingLabel location={location}>Following</FollowingLabel>
         </Link>
         <DivideLine />
-        <Link to={"/nature"}>
-          <NatureLabel pathname={pathname}>Nature</NatureLabel>
+        <Link to={"/search?term=nature"}>
+          <NatureLabel location={location}>Nature</NatureLabel>
         </Link>
-        <Link to={"/fashion"}>
-          <FashionLabel pathname={pathname}>Fashion</FashionLabel>
+        <Link to={"/search?term=fashion"}>
+          <FashionLabel location={location}>Fashion</FashionLabel>
         </Link>
-        <Link to={"/animal"}>
-          <AnimalLabel pathname={pathname}>Animal</AnimalLabel>
+        <Link to={"/search?term=animal"}>
+          <AnimalLabel location={location}>Animal</AnimalLabel>
         </Link>
       </HeaderBottom>
     </HeaderContainer>
