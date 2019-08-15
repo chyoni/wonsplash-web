@@ -4,7 +4,7 @@ import { IDetailPhoto } from "src/Redux/Modules/collect";
 import Theme from "src/Styles/Theme";
 import Photo from "src/Components/Photo";
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
   max-width: ${Theme.photoMaxWidth};
   display: flex;
   flex-direction: column;
@@ -45,16 +45,17 @@ interface IProps {
 const SearchPresenter: React.SFC<IProps> = ({ searchPhotos, term }) => {
   return (
     <>
-      <Container>
+      <HeaderContainer>
         <Header>
           <Term>{term}</Term>
           <Count>{`${searchPhotos.length} Photos`}</Count>
         </Header>
-      </Container>
+      </HeaderContainer>
       <GridPhotoContainer>
         {searchPhotos.map(photo => (
           <Photo
             key={photo.id}
+            id={photo.id}
             file={photo.file}
             isLiked={photo.is_liked}
             likeCount={photo.like_count}

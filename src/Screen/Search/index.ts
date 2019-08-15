@@ -5,10 +5,12 @@ import { actionCreators as collectActions } from "src/Redux/Modules/collect";
 const mapStateToProps = (state, ownProps) => {
   const { history } = ownProps;
   const {
-    collect: { searchPhotos }
+    collect: { searchPhotos },
+    router
   } = state;
   return {
     history,
+    router,
     searchPhotos
   };
 };

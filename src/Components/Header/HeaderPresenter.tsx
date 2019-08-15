@@ -149,13 +149,15 @@ interface IProps {
   term: string;
   my: any;
   pathname: string;
+  handleKeyPress: (e) => void;
   onChange: (e) => void;
 }
 const HeaderPresenter: React.SFC<IProps> = ({
   term,
   onChange,
   my,
-  pathname
+  pathname,
+  handleKeyPress
 }) => {
   return (
     <HeaderContainer>
@@ -172,6 +174,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
           <ExInput
             name={"term"}
             value={term}
+            onKeyPress={handleKeyPress}
             onChange={onChange}
             customWidth={"100%"}
             placeholder={"Search free high-resolution photos"}

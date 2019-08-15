@@ -6,6 +6,7 @@ interface IProps {
   my: object;
   pathname: string;
   profile: (username: any) => void;
+  goSearch: (term: string) => void;
 }
 interface IState {
   term: string;
@@ -41,6 +42,15 @@ class HeaderContainer extends React.Component<IProps, IState> {
     } as any);
   };
 
+  public handleKeyPress = e => {
+    const { term } = this.state;
+    const { goSearch } = this.props;
+    if (e.key === "Enter") {
+      e.preventDefault();
+      goSearch(term);
+    }
+  };
+
   public render() {
     const { pathname } = this.props;
     const { term, loading } = this.state;
@@ -52,6 +62,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
         <HeaderPresenter
           term={term}
           onChange={this.onChange}
+          handleKeyPress={this.handleKeyPress}
           my={my}
           pathname={pathname}
         />

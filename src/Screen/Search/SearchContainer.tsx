@@ -9,6 +9,7 @@ interface IState {
 }
 interface IProps {
   history: History;
+  router: any;
   searchByTerm: (term: string) => void;
   searchPhotos: IDetailPhoto[];
 }
@@ -31,10 +32,20 @@ class SearchContainer extends React.Component<IProps, IState> {
     searchByTerm(decodeTerm);
   }
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
+    const { router, searchByTerm } = this.props;
+    console.log(nextProps, router);
     if (nextProps && nextProps.searchPhotos) {
       this.setState({
         loading: false
       });
+    }
+    if (nextProps.location.key !== router.location.key) {
+      const {
+        location: { search }
+      } = nextProps;
+      const [, term] = search.split("=");
+      const decodeTerm = decodeURI(term);
+      searchByTerm(decodeTerm);
     }
   }
 
