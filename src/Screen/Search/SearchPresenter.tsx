@@ -38,6 +38,15 @@ const GridPhotoContainer = styled.div`
   min-height: 500px;
   max-width: ${Theme.photoMaxWidth};
 `;
+const NoPhoto = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
+const AlternativePhoto = styled.img`
+  width: 300px;
+  height: 300px;
+`;
 interface IProps {
   searchPhotos: IDetailPhoto[];
   term: string;
@@ -51,21 +60,27 @@ const SearchPresenter: React.SFC<IProps> = ({ searchPhotos, term }) => {
           <Count>{`${searchPhotos.length} Photos`}</Count>
         </Header>
       </HeaderContainer>
-      <GridPhotoContainer>
-        {searchPhotos.map(photo => (
-          <Photo
-            key={photo.id}
-            id={photo.id}
-            file={photo.file}
-            isLiked={photo.is_liked}
-            likeCount={photo.like_count}
-            createdAt={photo.natural_time}
-            tags={photo.tags}
-            views={photo.views}
-            creator={photo.creator}
-          />
-        ))}
-      </GridPhotoContainer>
+      {searchPhotos.length > 0 ? (
+        <GridPhotoContainer>
+          {searchPhotos.map(photo => (
+            <Photo
+              key={photo.id}
+              id={photo.id}
+              file={photo.file}
+              isLiked={photo.is_liked}
+              likeCount={photo.like_count}
+              createdAt={photo.natural_time}
+              tags={photo.tags}
+              views={photo.views}
+              creator={photo.creator}
+            />
+          ))}
+        </GridPhotoContainer>
+      ) : (
+        <NoPhoto>
+          <AlternativePhoto src={require("../../images/noSearch.png")} />
+        </NoPhoto>
+      )}
     </>
   );
 };
