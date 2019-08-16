@@ -7,6 +7,7 @@ import Theme from "src/Styles/Theme";
 import Avatar from "../Avatar";
 import Button from "../Button";
 import Photo from "../Photo";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -166,7 +167,9 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   closeOnDocumentClick={true}
                 >
                   <MoreBox>
-                    <MoreColumn>Edit Account</MoreColumn>
+                    <Link to={`/edit/${profile.username}`}>
+                      <MoreColumn>Edit Account</MoreColumn>
+                    </Link>
                     <MoreColumn>Submit a photo</MoreColumn>
                     <MoreColumn onClick={logout}>Logout</MoreColumn>
                   </MoreBox>
