@@ -1,4 +1,10 @@
 import ProfileContainer from "./ProfileContainer";
 import { connect } from "react-redux";
 
-export default connect()(ProfileContainer);
+const mapStateToProps = (state, ownProps) => {
+  const { router } = state;
+  return {
+    router
+  };
+};
+export default connect(mapStateToProps)(ProfileContainer);

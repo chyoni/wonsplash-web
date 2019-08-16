@@ -1,19 +1,18 @@
 import React from "react";
-import MyPresenter from "./MyPresenter";
+import AnonymousPresenter from "./AnonymousPresenter";
 import { IProfile, IMyLikes } from "src/Redux/Modules/user";
 import Loader from "src/Components/Loader";
 
 interface IProps {
-  username: string;
-  me: IProfile;
+  anyone: IProfile;
+  anyoneProfile: () => void;
   myLikePhotos: IMyLikes[];
-  myProfile: (username: string) => void;
   myLikes: () => void;
 }
 interface IState {
   loading: boolean;
 }
-class MyContainer extends React.Component<IProps, IState> {
+class AnonymousContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,26 +21,28 @@ class MyContainer extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    const { myProfile, username, myLikes } = this.props;
-    myProfile(username);
+    const { anyoneProfile, myLikes } = this.props;
+    anyoneProfile();
     myLikes();
   }
+
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
-    if (nextProps && nextProps.me && nextProps.myLikePhotos) {
+    if (nextProps && nextProps.anyone && nextProps.myLikePhotos) {
       this.setState({
         loading: false
       });
     }
   }
+
   public render() {
     const { loading } = this.state;
+    const { anyone, myLikePhotos } = this.props;
     if (loading) {
       return <Loader />;
     } else {
-      const { me, myLikePhotos } = this.props;
-      return <MyPresenter me={me} myLikePhotos={myLikePhotos} />;
+      return <AnonymousPresenter anyone={anyone} myLikePhotos={myLikePhotos} />;
     }
   }
 }
 
-export default MyContainer;
+export default AnonymousContainer;

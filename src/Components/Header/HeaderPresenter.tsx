@@ -198,7 +198,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
             bgColor={Theme.whiteFontColor}
             onClick={null}
           />
-          <Link to={"/my"}>
+          <Link to={`/profile/${me.username}`}>
             <ExAvatar uri={me.avatar} />
           </Link>
         </TopThird>

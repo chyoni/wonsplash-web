@@ -4,7 +4,8 @@ import { IProfile, IMyLikes } from "src/Redux/Modules/user";
 
 interface IProps {
   profile: IProfile;
-  myLikes?: IMyLikes[] | null;
+  myLikes: IMyLikes[];
+  router: any;
 }
 interface IState {
   state: string;
@@ -27,30 +28,25 @@ class ProfileContainer extends React.Component<IProps, IState> {
       state: "liked"
     });
   };
+  public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
+    const { router } = this.props;
+    if (nextProps.router.location.key !== router.location.key) {
+      window.location.reload();
+    }
+  }
 
   public render() {
     const { profile, myLikes } = this.props;
     const { state } = this.state;
-    if (myLikes) {
-      return (
-        <ProfilePresenter
-          profile={profile}
-          myLikes={myLikes}
-          state={state}
-          stateToPhoto={this.stateToPhoto}
-          stateToLiked={this.stateToLiked}
-        />
-      );
-    } else {
-      return (
-        <ProfilePresenter
-          profile={profile}
-          state={state}
-          stateToPhoto={this.stateToPhoto}
-          stateToLiked={this.stateToLiked}
-        />
-      );
-    }
+    return (
+      <ProfilePresenter
+        profile={profile}
+        myLikes={myLikes}
+        state={state}
+        stateToPhoto={this.stateToPhoto}
+        stateToLiked={this.stateToLiked}
+      />
+    );
   }
 }
 

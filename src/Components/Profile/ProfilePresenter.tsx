@@ -129,7 +129,7 @@ const AlternativePhoto = styled.img`
 
 interface IProps {
   profile: IProfile;
-  myLikes?: IMyLikes[];
+  myLikes: IMyLikes[];
   state?: string;
   stateToPhoto: () => void;
   stateToLiked: () => void;
@@ -198,7 +198,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
           } Photos`}</SectionPhoto>
           {profile.is_self && (
             <SectionLiked state={state} onClick={stateToLiked}>{`${
-              myLikes!.length
+              myLikes.length
             } Liked`}</SectionLiked>
           )}
         </Section>
@@ -234,9 +234,9 @@ const ProfilePresenter: React.SFC<IProps> = ({
             </>
           ) : (
             <>
-              {myLikes!.length > 0 ? (
+              {myLikes.length > 0 ? (
                 <GridPhotoContainer>
-                  {myLikes!.map(liked => (
+                  {myLikes.map(liked => (
                     <Photo
                       key={liked.id}
                       id={liked.image.id}

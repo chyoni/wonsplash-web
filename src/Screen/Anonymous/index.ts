@@ -1,13 +1,14 @@
-import YourContainer from "./YourContainer";
+import AnonymousContainer from "./AnonymousContainer";
 import { connect } from "react-redux";
 import { actionCreators as userActions } from "src/Redux/Modules/user";
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    user: { anyone }
+    user: { anyone, myLikePhotos }
   } = state;
   return {
-    anyone
+    anyone,
+    myLikePhotos
   };
 };
 
@@ -20,6 +21,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     anyoneProfile: () => {
       dispatch(userActions.anyoneProfile(username));
+    },
+    myLikes: () => {
+      dispatch(userActions.myLikes());
     }
   };
 };
@@ -27,4 +31,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(YourContainer);
+)(AnonymousContainer);
