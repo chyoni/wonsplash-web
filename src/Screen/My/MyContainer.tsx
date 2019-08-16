@@ -5,7 +5,7 @@ import Loader from "src/Components/Loader";
 
 interface IProps {
   username: string;
-  who: IProfile;
+  me: IProfile;
   myLikePhotos: IMyLikes[];
   myProfile: (username: string) => void;
   myLikes: () => void;
@@ -27,7 +27,7 @@ class MyContainer extends React.Component<IProps, IState> {
     myLikes();
   }
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
-    if (nextProps && nextProps.who && nextProps.myLikePhotos) {
+    if (nextProps && nextProps.me && nextProps.myLikePhotos) {
       this.setState({
         loading: false
       });
@@ -38,7 +38,8 @@ class MyContainer extends React.Component<IProps, IState> {
     if (loading) {
       return <Loader />;
     } else {
-      return <MyPresenter />;
+      const { me, myLikePhotos } = this.props;
+      return <MyPresenter me={me} myLikePhotos={myLikePhotos} />;
     }
   }
 }

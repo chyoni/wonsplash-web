@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Input from "../Input";
 import Button from "../Button";
 import Avatar from "../Avatar";
+import { IProfile } from "src/Redux/Modules/user";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -155,7 +156,7 @@ const DivideLine = styled.div`
 
 interface IProps {
   term: string;
-  who: any;
+  me: IProfile;
   location: any;
   handleKeyPress: (e) => void;
   onChange: (e) => void;
@@ -163,7 +164,7 @@ interface IProps {
 const HeaderPresenter: React.SFC<IProps> = ({
   term,
   onChange,
-  who,
+  me,
   location,
   handleKeyPress
 }) => {
@@ -198,7 +199,7 @@ const HeaderPresenter: React.SFC<IProps> = ({
             onClick={null}
           />
           <Link to={"/my"}>
-            <ExAvatar uri={who.avatar} />
+            <ExAvatar uri={me.avatar} />
           </Link>
         </TopThird>
       </HeaderTop>

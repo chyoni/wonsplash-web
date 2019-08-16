@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Helmet from "react-helmet";
 import { IDetailPhoto } from "src/Redux/Modules/collect";
 import Theme from "src/Styles/Theme";
 import Photo from "src/Components/Photo";
@@ -55,6 +56,9 @@ const SearchPresenter: React.SFC<IProps> = ({ searchPhotos, term }) => {
   return (
     <>
       <HeaderContainer>
+        <Helmet>
+          <title>검색 | Wonsplash</title>
+        </Helmet>
         <Header>
           <Term>{term}</Term>
           <Count>{`${searchPhotos.length} Photos`}</Count>

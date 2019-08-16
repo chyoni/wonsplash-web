@@ -1,9 +1,10 @@
 import React from "react";
 import HeaderPresenter from "./HeaderPresenter";
+import { IProfile } from "src/Redux/Modules/user";
 
 interface IProps {
   username: string;
-  who: object;
+  me: IProfile;
   location: any;
   profile: (username: any) => void;
   goSearch: (term: string) => void;
@@ -28,7 +29,7 @@ class HeaderContainer extends React.Component<IProps, IState> {
 
   // will deprecated funtion at v17~
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
-    if (nextProps && nextProps.who) {
+    if (nextProps && nextProps.me) {
       this.setState({ loading: false });
     }
   }
@@ -57,13 +58,13 @@ class HeaderContainer extends React.Component<IProps, IState> {
     if (loading) {
       return null;
     } else {
-      const { who } = this.props;
+      const { me } = this.props;
       return (
         <HeaderPresenter
           term={term}
           onChange={this.onChange}
           handleKeyPress={this.handleKeyPress}
-          who={who}
+          me={me}
           location={location}
         />
       );

@@ -15,7 +15,7 @@ export interface IProfile {
   is_following: boolean;
   is_self: boolean;
   post_count: number;
-  images: Array<[IDetailPhoto]>;
+  images: IDetailPhoto[];
 }
 export interface IMyLikes {
   id: number;
@@ -191,10 +191,10 @@ function applySaveToken(state, action) {
   };
 }
 function applyProfile(state, action) {
-  const { data: who } = action;
+  const { data: me } = action;
   return {
     ...state,
-    who
+    me
   };
 }
 function applyMyLikes(state, action) {

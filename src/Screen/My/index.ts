@@ -4,11 +4,11 @@ import { actionCreators as userActions } from "src/Redux/Modules/user";
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    user: { username, who, myLikePhotos }
+    user: { username, me, myLikePhotos }
   } = state;
   return {
     username,
-    who,
+    me,
     myLikePhotos
   };
 };

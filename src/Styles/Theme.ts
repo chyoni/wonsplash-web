@@ -9,5 +9,6 @@ export default {
   maxWidth: "1295px",
   headerHight: "120px",
   photoMaxWidth: "1230px",
-  redColor: "#F15151"
+  redColor: "#F15151",
+  blueFollowColor: "#007FFF"
 };

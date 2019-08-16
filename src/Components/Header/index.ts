@@ -5,12 +5,12 @@ import { actionCreators as userActions } from "src/Redux/Modules/user";
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    user: { username, who },
+    user: { username, me },
     router: { location }
   } = state;
   return {
     username,
-    who,
+    me,
     location
   };
 };
