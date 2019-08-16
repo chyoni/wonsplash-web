@@ -93,6 +93,7 @@ interface IProps {
     username: string;
   };
   onClickHeart: () => void;
+  showingHeart?: boolean;
 }
 const Photo: React.SFC<IProps> = ({
   id,
@@ -101,15 +102,18 @@ const Photo: React.SFC<IProps> = ({
   creator,
   onClickHeart,
   isOpen,
-  toggleModal
+  toggleModal,
+  showingHeart = true
 }) => {
   return (
     <Container file={file}>
       <Overlay>
         <Top>
-          <HeartBox onClick={onClickHeart} isLiked={isLiked}>
-            <Heart />
-          </HeartBox>
+          {showingHeart && (
+            <HeartBox onClick={onClickHeart} isLiked={isLiked}>
+              <Heart />
+            </HeartBox>
+          )}
           <ViewBox onClick={toggleModal}>
             <View />
           </ViewBox>

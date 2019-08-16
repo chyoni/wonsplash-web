@@ -220,6 +220,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                       tags={p.tags}
                       views={p.views}
                       creator={p.creator}
+                      showingHeart={false}
                     />
                   ))}
                 </GridPhotoContainer>
@@ -246,6 +247,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                       tags={liked.image.tags}
                       views={liked.image.views}
                       creator={liked.image.creator}
+                      showingHeart={false}
                     />
                   ))}
                 </GridPhotoContainer>
@@ -274,6 +276,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   tags={p.tags}
                   views={p.views}
                   creator={p.creator}
+                  showingHeart={false}
                 />
               ))}
             </GridPhotoContainer>

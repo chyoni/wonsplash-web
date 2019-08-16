@@ -11,7 +11,7 @@ interface IProps {
   history: History;
   router: any;
   searchByTerm: (term: string) => void;
-  searchPhotos: IDetailPhoto[];
+  feedArray: IDetailPhoto[];
 }
 class SearchContainer extends React.Component<IProps, IState> {
   constructor(props) {
@@ -33,7 +33,7 @@ class SearchContainer extends React.Component<IProps, IState> {
   }
   public UNSAFE_componentWillReceiveProps(nextProps, prevState) {
     const { router, searchByTerm } = this.props;
-    if (nextProps && nextProps.searchPhotos) {
+    if (nextProps && nextProps.feedArray) {
       this.setState({
         loading: false
       });
@@ -53,16 +53,14 @@ class SearchContainer extends React.Component<IProps, IState> {
     if (loading) {
       return <Loader />;
     } else {
-      const { searchPhotos } = this.props;
+      const { feedArray } = this.props;
       const {
         history: {
           location: { search }
         }
       } = this.props;
       const [, term] = search.split("=");
-      return (
-        <SearchPresenter searchPhotos={searchPhotos} term={decodeURI(term)} />
-      );
+      return <SearchPresenter feedArray={feedArray} term={decodeURI(term)} />;
     }
   }
 }

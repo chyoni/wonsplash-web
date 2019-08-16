@@ -17,6 +17,7 @@ interface IProps {
   };
   likePhoto: () => void;
   unlikePhoto: () => void;
+  showingHeart?: boolean;
 }
 
 interface IState {
@@ -45,7 +46,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
   };
 
   public render() {
-    const { id, file, isLiked, creator } = this.props;
+    const { id, file, isLiked, creator, showingHeart } = this.props;
     const { isOpen } = this.state;
     return (
       <PhotoPresenter
@@ -56,6 +57,7 @@ class PhotoContainer extends React.Component<IProps, IState> {
         onClickHeart={this.onClickHeart}
         isOpen={isOpen}
         toggleModal={this.toggleModal}
+        showingHeart={showingHeart}
       />
     );
   }

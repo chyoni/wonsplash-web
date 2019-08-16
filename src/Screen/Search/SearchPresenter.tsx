@@ -49,10 +49,10 @@ const AlternativePhoto = styled.img`
   height: 300px;
 `;
 interface IProps {
-  searchPhotos: IDetailPhoto[];
+  feedArray: IDetailPhoto[];
   term: string;
 }
-const SearchPresenter: React.SFC<IProps> = ({ searchPhotos, term }) => {
+const SearchPresenter: React.SFC<IProps> = ({ feedArray, term }) => {
   return (
     <>
       <HeaderContainer>
@@ -61,12 +61,12 @@ const SearchPresenter: React.SFC<IProps> = ({ searchPhotos, term }) => {
         </Helmet>
         <Header>
           <Term>{term}</Term>
-          <Count>{`${searchPhotos.length} Photos`}</Count>
+          <Count>{`${feedArray.length} Photos`}</Count>
         </Header>
       </HeaderContainer>
-      {searchPhotos.length > 0 ? (
+      {feedArray.length > 0 ? (
         <GridPhotoContainer>
-          {searchPhotos.map(photo => (
+          {feedArray.map(photo => (
             <Photo
               key={photo.id}
               id={photo.id}

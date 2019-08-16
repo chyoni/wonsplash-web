@@ -242,7 +242,7 @@ function applySearchPhoto(state, action) {
   const { data } = action;
   return {
     ...state,
-    searchPhotos: data
+    feedArray: data
   };
 }
 
