@@ -3,6 +3,7 @@ import axios from "axios";
 import { Dispatch } from "redux";
 import { push } from "react-router-redux";
 import { IDetailPhoto } from "./collect";
+import { toast } from "react-toastify";
 // types
 export interface IProfile {
   id: number;
@@ -36,12 +37,19 @@ export interface IMyLikes {
     views: number;
   };
 }
+export interface IEditData {
+  avatar: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
 // actionsTypes
 const SAVE_TOKEN = "SAVE_TOKEN";
 const PROFILE = "PROFILE";
 const MY_LIKES = "MY_LIKES";
 const ANYONE_PROFILE = "ANYONE_PROFILE";
 const TOGGLE_FOLLOW = "TOGGLE_FOLLOW";
+const EDIT = "EDIT";
 
 // Action
 function saveToken(data: object) {
@@ -74,6 +82,12 @@ function saveToggleFollow(userId: number) {
     userId
   };
 }
+function saveEdit(data: IEditData) {
+  return {
+    type: EDIT,
+    data
+  };
+}
 
 // API actions
 function facebookLogin(accessToken: string) {
@@ -89,6 +103,8 @@ function facebookLogin(accessToken: string) {
             await dispatch(saveToken(res.data));
             window.location.href = "/";
           }
+        } else {
+          toast.error(res.statusText);
         }
       })
       .catch(err => console.log(err));
@@ -106,6 +122,8 @@ function usernameLogin(username: string, password: string) {
           if (res.data && res.data.token) {
             dispatch(saveToken(res.data));
           }
+        } else {
+          toast.error(res.statusText);
         }
       })
       .catch(err => console.log(err));
@@ -131,6 +149,8 @@ function registration(
             await dispatch(saveToken(res.data));
             window.location.href = "/";
           }
+        } else {
+          toast.error(res.statusText);
         }
       })
       .catch(err => console.log(err));
@@ -151,6 +171,7 @@ function profile(username: string) {
             dispatch(saveProfile(res.data));
           }
         } else {
+          toast.error(res.statusText);
           console.log(res.status, res.statusText);
         }
       })
@@ -170,6 +191,7 @@ function myLikes() {
         if (res.status === 200) {
           dispatch(saveMyLikes(res.data));
         } else {
+          toast.error(res.statusText);
           console.log("error => ", res.status, res.statusText, res.data);
         }
       })
@@ -189,6 +211,7 @@ function anyoneProfile(username: string) {
         if (res.status === 200) {
           dispatch(saveAnyoneProfile(res.data));
         } else {
+          toast.error(res.statusText);
           console.log("error => ", res.status, res.statusText, res.data);
         }
       })
@@ -208,6 +231,7 @@ function follow(userId: number) {
         if (res.status === 200) {
           dispatch(saveToggleFollow(userId));
         } else {
+          toast.error(res.statusText);
           console.log("error => ", res.status, res.statusText, res.data);
         }
       })
@@ -227,6 +251,7 @@ function unfollow(userId: number) {
         if (res.status === 200) {
           dispatch(saveToggleFollow(userId));
         } else {
+          toast.error(res.statusText);
           console.log("error =>", res.status, res.statusText, res.data);
         }
       })
@@ -248,7 +273,37 @@ function logout() {
           await localStorage.removeItem("username");
           dispatch(push("/"));
         } else {
+          toast.error(res.statusText);
           console.log("error =>", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+function edit(firstName?: string, lastName?: string, avatar?: string) {
+  const token = localStorage.getItem("jwt");
+  const username = localStorage.getItem("username");
+  return (dispatch: Dispatch) => {
+    axios
+      .put(
+        `/users/${username}/`,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          avatar
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveEdit(res.data));
+        } else {
+          toast.error(res.statusText);
+          console.log("error => ", res.status, res.statusText, res.data);
         }
       })
       .catch(err => console.log(err));
@@ -273,6 +328,8 @@ function reducer(state = initialState, action: any) {
       return applyAnyoneProfile(state, action);
     case TOGGLE_FOLLOW:
       return applyToggleFollow(state, action);
+    case EDIT:
+      return applyEdit(state, action);
     default:
       return state;
   }
@@ -325,6 +382,26 @@ function applyToggleFollow(state, action) {
     return Error;
   }
 }
+function applyEdit(state, action) {
+  const { username } = state;
+  const {
+    data: { avatar, email, first_name, last_name }
+  } = action;
+  toast.success("Edit Success 😍");
+  setTimeout(() => {
+    window.location.href = `http://localhost:3000/profile/${username}`;
+  }, 2700);
+  return {
+    ...state,
+    me: {
+      ...state.me,
+      avatar,
+      email,
+      first_name,
+      last_name
+    }
+  };
+}
 // exports
 export const actionCreators = {
   facebookLogin,
@@ -335,7 +412,8 @@ export const actionCreators = {
   myLikes,
   follow,
   unfollow,
-  logout
+  logout,
+  edit
 };
 
 export default reducer;

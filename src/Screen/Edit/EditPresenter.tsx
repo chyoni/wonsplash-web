@@ -49,6 +49,8 @@ interface IProps {
   lastName: string;
   me: IProfile;
   onChangeText: (e) => void;
+  onChange: (e: any) => Promise<void>;
+  onSumbit: () => void;
 }
 
 const EditPresenter: React.SFC<IProps> = ({
@@ -57,7 +59,9 @@ const EditPresenter: React.SFC<IProps> = ({
   firstName,
   lastName,
   me,
-  onChangeText
+  onChangeText,
+  onChange,
+  onSumbit
 }) => {
   return (
     <Container>
@@ -66,7 +70,7 @@ const EditPresenter: React.SFC<IProps> = ({
           <AvatarInput
             uploading={uploading}
             fileUrl={fileUrl}
-            onChange={null}
+            onChange={onChange}
           />
         </HeaderLeft>
         <HeaderRight>
@@ -94,7 +98,7 @@ const EditPresenter: React.SFC<IProps> = ({
         <Button
           width={"383px"}
           bgColor={Theme.blackFontColor}
-          onClick={null}
+          onClick={onSumbit}
           text={"Update Account"}
           textSize={"17px"}
           textColor={Theme.whiteFontColor}

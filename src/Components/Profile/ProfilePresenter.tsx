@@ -167,7 +167,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   closeOnDocumentClick={true}
                 >
                   <MoreBox>
-                    <Link to={`/edit/${profile.username}`}>
+                    <Link to={`/edit`}>
                       <MoreColumn>Edit Account</MoreColumn>
                     </Link>
                     <MoreColumn>Submit a photo</MoreColumn>

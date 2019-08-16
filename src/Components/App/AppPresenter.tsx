@@ -27,7 +27,7 @@ const LoggedInRoutes = () => {
       <Route exact={true} path={"/"} component={Feed} />
       <Route exact={true} path={"/search"} component={Search} />
       <Route exact={true} path={"/profile/:username"} component={Anonymous} />
-      <Route exact={true} path={"/edit/:username"} component={Edit} />
+      <Route exact={true} path={"/edit"} component={Edit} />
     </Switch>
   );
 };
