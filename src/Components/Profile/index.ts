@@ -1,5 +1,6 @@
 import ProfileContainer from "./ProfileContainer";
 import { connect } from "react-redux";
+import { actionCreators as userActions } from "src/Redux/Modules/user";
 
 const mapStateToProps = (state, ownProps) => {
   const { router } = state;
@@ -7,4 +8,19 @@ const mapStateToProps = (state, ownProps) => {
     router
   };
 };
-export default connect(mapStateToProps)(ProfileContainer);
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    follow: (userId: number) => {
+      dispatch(userActions.follow(userId));
+    },
+    unfollow: (userId: number) => {
+      dispatch(userActions.unfollow(userId));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileContainer);

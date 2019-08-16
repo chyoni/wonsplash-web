@@ -74,6 +74,9 @@ const FollowButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content: center;
+  &:focus {
+    outline: none;
+  }
 `;
 const Text = styled.span`
   font-size: 17px;
@@ -133,13 +136,15 @@ interface IProps {
   state?: string;
   stateToPhoto: () => void;
   stateToLiked: () => void;
+  onClickFollowButton: () => void;
 }
 const ProfilePresenter: React.SFC<IProps> = ({
   profile,
   myLikes,
   state,
   stateToPhoto,
-  stateToLiked
+  stateToLiked,
+  onClickFollowButton
 }) => {
   return (
     <>
@@ -178,7 +183,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                       : Theme.whiteFontColor
                   }
                   textSize={"16px"}
-                  onClick={null}
+                  onClick={onClickFollowButton}
                   width={"80px"}
                 />
               )}

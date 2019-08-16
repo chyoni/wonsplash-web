@@ -40,6 +40,8 @@ const SAVE_TOKEN = "SAVE_TOKEN";
 const PROFILE = "PROFILE";
 const MY_LIKES = "MY_LIKES";
 const ANYONE_PROFILE = "ANYONE_PROFILE";
+const TOGGLE_FOLLOW = "TOGGLE_FOLLOW";
+
 // Action
 function saveToken(data: object) {
   return {
@@ -65,6 +67,13 @@ function saveAnyoneProfile(data: IProfile) {
     data
   };
 }
+function saveToggleFollow(userId: number) {
+  return {
+    type: TOGGLE_FOLLOW,
+    userId
+  };
+}
+
 // API actions
 function facebookLogin(accessToken: string) {
   return (dispatch: Dispatch) => {
@@ -185,6 +194,44 @@ function anyoneProfile(username: string) {
       .catch(err => console.log(err));
   };
 }
+function follow(userId: number) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .post(`/users/follow/${userId}/`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveToggleFollow(userId));
+        } else {
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+function unfollow(userId: number) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .post(`/users/unfollow/${userId}/`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveToggleFollow(userId));
+        } else {
+          console.log("error =>", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 // initialState
 const initialState = {
   isLoggedIn: localStorage.getItem("jwt") ? true : false,
@@ -201,6 +248,8 @@ function reducer(state = initialState, action: any) {
       return applyMyLikes(state, action);
     case ANYONE_PROFILE:
       return applyAnyoneProfile(state, action);
+    case TOGGLE_FOLLOW:
+      return applyToggleFollow(state, action);
     default:
       return state;
   }
@@ -239,6 +288,20 @@ function applyAnyoneProfile(state, action) {
     anyone: data
   };
 }
+function applyToggleFollow(state, action) {
+  const { userId } = action;
+  if (state.anyone.id === userId) {
+    return {
+      ...state,
+      anyone: {
+        ...state.anyone,
+        is_following: !state.anyone.is_following
+      }
+    };
+  } else {
+    return Error;
+  }
+}
 // exports
 export const actionCreators = {
   facebookLogin,
@@ -246,7 +309,9 @@ export const actionCreators = {
   registration,
   profile,
   anyoneProfile,
-  myLikes
+  myLikes,
+  follow,
+  unfollow
 };
 
 export default reducer;

@@ -6,6 +6,8 @@ interface IProps {
   profile: IProfile;
   myLikes: IMyLikes[];
   router: any;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
 }
 interface IState {
   state: string;
@@ -35,6 +37,15 @@ class ProfileContainer extends React.Component<IProps, IState> {
     }
   }
 
+  public onClickFollowButton = () => {
+    const { profile, follow, unfollow } = this.props;
+    if (profile.is_following) {
+      unfollow(profile.id);
+    } else {
+      follow(profile.id);
+    }
+  };
+
   public render() {
     const { profile, myLikes } = this.props;
     const { state } = this.state;
@@ -45,6 +56,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
         state={state}
         stateToPhoto={this.stateToPhoto}
         stateToLiked={this.stateToLiked}
+        onClickFollowButton={this.onClickFollowButton}
       />
     );
   }
