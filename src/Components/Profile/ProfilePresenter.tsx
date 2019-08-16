@@ -137,6 +137,7 @@ interface IProps {
   stateToPhoto: () => void;
   stateToLiked: () => void;
   onClickFollowButton: () => void;
+  logout: () => void;
 }
 const ProfilePresenter: React.SFC<IProps> = ({
   profile,
@@ -144,7 +145,8 @@ const ProfilePresenter: React.SFC<IProps> = ({
   state,
   stateToPhoto,
   stateToLiked,
-  onClickFollowButton
+  onClickFollowButton,
+  logout
 }) => {
   return (
     <>
@@ -166,7 +168,7 @@ const ProfilePresenter: React.SFC<IProps> = ({
                   <MoreBox>
                     <MoreColumn>Edit Account</MoreColumn>
                     <MoreColumn>Submit a photo</MoreColumn>
-                    <MoreColumn>Logout</MoreColumn>
+                    <MoreColumn onClick={logout}>Logout</MoreColumn>
                   </MoreBox>
                 </Popup>
               ) : (

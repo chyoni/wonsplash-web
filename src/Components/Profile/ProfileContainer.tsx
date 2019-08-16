@@ -8,6 +8,7 @@ interface IProps {
   router: any;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
+  logout: () => void;
 }
 interface IState {
   state: string;
@@ -47,7 +48,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
   };
 
   public render() {
-    const { profile, myLikes } = this.props;
+    const { profile, myLikes, logout } = this.props;
     const { state } = this.state;
     return (
       <ProfilePresenter
@@ -57,6 +58,7 @@ class ProfileContainer extends React.Component<IProps, IState> {
         stateToPhoto={this.stateToPhoto}
         stateToLiked={this.stateToLiked}
         onClickFollowButton={this.onClickFollowButton}
+        logout={logout}
       />
     );
   }

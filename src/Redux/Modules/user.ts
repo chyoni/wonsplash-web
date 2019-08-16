@@ -1,6 +1,7 @@
 // import
 import axios from "axios";
 import { Dispatch } from "redux";
+import { push } from "react-router-redux";
 import { IDetailPhoto } from "./collect";
 // types
 export interface IProfile {
@@ -232,6 +233,28 @@ function unfollow(userId: number) {
       .catch(err => console.log(err));
   };
 }
+function logout() {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .post("/rest-auth/logout/", null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(async res => {
+        if (res.status === 200) {
+          await localStorage.removeItem("jwt");
+          await localStorage.removeItem("username");
+          dispatch(push("/"));
+        } else {
+          console.log("error =>", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+
 // initialState
 const initialState = {
   isLoggedIn: localStorage.getItem("jwt") ? true : false,
@@ -311,7 +334,8 @@ export const actionCreators = {
   anyoneProfile,
   myLikes,
   follow,
-  unfollow
+  unfollow,
+  logout
 };
 
 export default reducer;

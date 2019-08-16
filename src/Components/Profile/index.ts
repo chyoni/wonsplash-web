@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     unfollow: (userId: number) => {
       dispatch(userActions.unfollow(userId));
+    },
+    logout: () => {
+      dispatch(userActions.logout());
     }
   };
 };
