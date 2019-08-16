@@ -39,6 +39,7 @@ export interface IMyLikes {
 const SAVE_TOKEN = "SAVE_TOKEN";
 const PROFILE = "PROFILE";
 const MY_LIKES = "MY_LIKES";
+const ANYONE_PROFILE = "ANYONE_PROFILE";
 // Action
 function saveToken(data: object) {
   return {
@@ -55,6 +56,12 @@ function saveProfile(data: IProfile) {
 function saveMyLikes(data: IMyLikes[]) {
   return {
     type: MY_LIKES,
+    data
+  };
+}
+function saveAnyoneProfile(data: IProfile) {
+  return {
+    type: ANYONE_PROFILE,
     data
   };
 }
@@ -159,6 +166,25 @@ function myLikes() {
       .catch(err => console.log(err));
   };
 }
+function anyoneProfile(username: string) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .get(`/users/${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveAnyoneProfile(res.data));
+        } else {
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 // initialState
 const initialState = {
   isLoggedIn: localStorage.getItem("jwt") ? true : false,
@@ -173,6 +199,8 @@ function reducer(state = initialState, action: any) {
       return applyProfile(state, action);
     case MY_LIKES:
       return applyMyLikes(state, action);
+    case ANYONE_PROFILE:
+      return applyAnyoneProfile(state, action);
     default:
       return state;
   }
@@ -204,12 +232,20 @@ function applyMyLikes(state, action) {
     myLikePhotos: data
   };
 }
+function applyAnyoneProfile(state, action) {
+  const { data } = action;
+  return {
+    ...state,
+    anyone: data
+  };
+}
 // exports
 export const actionCreators = {
   facebookLogin,
   usernameLogin,
   registration,
   profile,
+  anyoneProfile,
   myLikes
 };
 

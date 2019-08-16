@@ -6,6 +6,7 @@ import Feed from "../../Screen/Feed";
 import Header from "../Header";
 import Search from "src/Screen/Search";
 import My from "src/Screen/My";
+import Your from "src/Screen/Your";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -26,6 +27,7 @@ const LoggedInRoutes = () => {
       <Route exact={true} path={"/"} component={Feed} />
       <Route exact={true} path={"/search"} component={Search} />
       <Route exact={true} path={"/my"} component={My} />
+      <Route exact={true} path={"/profile/:username"} component={Your} />
     </Switch>
   );
 };
