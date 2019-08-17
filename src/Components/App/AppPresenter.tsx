@@ -7,6 +7,7 @@ import Header from "../Header";
 import Search from "src/Screen/Search";
 import Anonymous from "src/Screen/Anonymous";
 import Edit from "src/Screen/Edit";
+import Followings from "src/Screen/Followings";
 
 interface IProps {
   isLoggedIn: boolean;
@@ -28,6 +29,7 @@ const LoggedInRoutes = () => {
       <Route exact={true} path={"/search"} component={Search} />
       <Route exact={true} path={"/profile/:username"} component={Anonymous} />
       <Route exact={true} path={"/edit"} component={Edit} />
+      <Route exact={true} path={"/following"} component={Followings} />
     </Switch>
   );
 };

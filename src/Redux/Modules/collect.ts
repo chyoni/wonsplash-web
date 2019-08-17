@@ -1,6 +1,7 @@
 // import
 import axios from "axios";
 import { Dispatch } from "redux";
+import { toast } from "react-toastify";
 
 // types
 export interface IDetailPhoto {
@@ -23,6 +24,7 @@ const FEED = "FEED";
 const TOGGLE_LIKE = "TOGGLE_LIKE";
 const DETAIL = "DETAIL";
 const SEARCH = "SEARCH";
+const FOLLOWINGS_IMAGE = "FOLLOWINGS_IMAGE";
 // action
 function saveFeed(data: IDetailPhoto[]) {
   return {
@@ -45,6 +47,12 @@ function saveDetailPhoto(data: IDetailPhoto) {
 function saveSearchPhoto(data: IDetailPhoto[]) {
   return {
     type: SEARCH,
+    data
+  };
+}
+function saveFollowingsImage(data: IDetailPhoto) {
+  return {
+    type: FOLLOWINGS_IMAGE,
     data
   };
 }
@@ -147,6 +155,26 @@ function searchByTerm(term: string) {
       .catch(err => console.log(err));
   };
 }
+function followingsImage(username: string) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .get(`/collects/${username}/followings/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          dispatch(saveFollowingsImage(res.data));
+        } else {
+          toast.error(res.statusText);
+          console.log("error =>", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 
 // initialState
 const initialState = {
@@ -163,6 +191,8 @@ function reducer(state = initialState, action: any) {
       return applyDetailPhoto(state, action);
     case SEARCH:
       return applySearchPhoto(state, action);
+    case FOLLOWINGS_IMAGE:
+      return applyFollowingsImage(state, action);
     default:
       return state;
   }
@@ -245,6 +275,13 @@ function applySearchPhoto(state, action) {
     feedArray: data
   };
 }
+function applyFollowingsImage(state, action) {
+  const { data } = action;
+  return {
+    ...state,
+    feedArray: data
+  };
+}
 
 // actionCreators
 export const actionCreators = {
@@ -252,7 +289,8 @@ export const actionCreators = {
   likePhoto,
   unlikePhoto,
   detailPhoto,
-  searchByTerm
+  searchByTerm,
+  followingsImage
 };
 // exports
 export default reducer;
