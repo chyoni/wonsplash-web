@@ -2,7 +2,7 @@ import React from "react";
 import isNil from "lodash/fp/isNil";
 import styled from "styled-components";
 import Theme from "src/Styles/Theme";
-import { Close, Heart, Info, Eye, Hashtag } from "../Icons/icons";
+import { Close, Heart, Info, Eye, Hashtag, Delete } from "../Icons/icons";
 import Loader from "../Loader";
 import Avatar from "../Avatar";
 import { Link } from "react-router-dom";
@@ -81,6 +81,21 @@ const HeartBox = styled<any>("div")`
     fill: ${props => (props.isLiked ? Theme.whiteFontColor : Theme.redColor)};
   }
 `;
+const DeleteBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${Theme.whiteFontColor};
+  border: ${Theme.boxBorder};
+  transition: all 0.2s linear;
+  border-radius: 7px;
+  padding: 10px 11px;
+  margin-right: 25px;
+  cursor: pointer;
+  &:hover {
+    border-color: ${Theme.blackFontColor};
+  }
+`;
 const ModalBody = styled.div`
   width: 100%;
   height: 100%;
@@ -139,7 +154,9 @@ interface IProps {
   detailPhoto: () => void;
   likePhoto: () => void;
   unlikePhoto: () => void;
+  deletePhoto: () => void;
   photoId: number;
+  username: string;
   photo: {
     creator: { id: number; username: string; avatar: string };
     file: string;
@@ -205,6 +222,14 @@ class PhotoModalContainer extends React.Component<IProps, IState> {
     }
   };
 
+  public onClickDelete = () => {
+    const { toggleModal, deletePhoto } = this.props;
+    setTimeout(() => {
+      toggleModal();
+    }, 500);
+    deletePhoto();
+  };
+
   public render() {
     const { toggleModal } = this.props;
     const { loading } = this.state;
@@ -217,7 +242,7 @@ class PhotoModalContainer extends React.Component<IProps, IState> {
         </ModalOverlay>
       );
     } else {
-      const { photo } = this.props;
+      const { photo, username: stateUsername } = this.props;
       return (
         <ModalOverlay>
           <ModalContainer ref={node => (this.modal = node)}>
@@ -231,7 +256,19 @@ class PhotoModalContainer extends React.Component<IProps, IState> {
                 </Link>
               </ModalHeaderUser>
               <ModalHeaderMeta>
-                <HeartBox isLiked={photo.is_liked} onClick={this.onClickHeart}>
+                {photo.creator.username === stateUsername && (
+                  <DeleteBox
+                    title={"Delete Photo"}
+                    onClick={this.onClickDelete}
+                  >
+                    <Delete />
+                  </DeleteBox>
+                )}
+                <HeartBox
+                  isLiked={photo.is_liked}
+                  onClick={this.onClickHeart}
+                  title={"Like Photo"}
+                >
                   <Heart />
                 </HeartBox>
                 <CloseBox onClick={toggleModal}>

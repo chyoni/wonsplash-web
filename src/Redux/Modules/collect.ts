@@ -175,6 +175,29 @@ function followingsImage(username: string) {
       .catch(err => console.log(err));
   };
 }
+function deletePhoto(imageId: number) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .delete(`/collects/detail/${imageId}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          toast.success("Delete Done ✔");
+          setTimeout(() => {
+            window.location.reload();
+          }, 2700);
+        } else {
+          toast.error(res.statusText);
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 
 // initialState
 const initialState = {
@@ -290,7 +313,8 @@ export const actionCreators = {
   unlikePhoto,
   detailPhoto,
   searchByTerm,
-  followingsImage
+  followingsImage,
+  deletePhoto
 };
 // exports
 export default reducer;

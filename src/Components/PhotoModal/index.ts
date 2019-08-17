@@ -4,10 +4,12 @@ import { actionCreators as collectActions } from "src/Redux/Modules/collect";
 
 const mapStateToProps = (state, ownProps) => {
   const {
+    user: { username },
     collect: { photo }
   } = state;
   return {
-    photo
+    photo,
+    username
   };
 };
 
@@ -22,6 +24,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     unlikePhoto: () => {
       dispatch(collectActions.unlikePhoto(photoId));
+    },
+    deletePhoto: () => {
+      dispatch(collectActions.deletePhoto(photoId));
     }
   };
 };

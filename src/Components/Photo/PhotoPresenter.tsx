@@ -110,11 +110,15 @@ const Photo: React.SFC<IProps> = ({
       <Overlay>
         <Top>
           {showingHeart && (
-            <HeartBox onClick={onClickHeart} isLiked={isLiked}>
+            <HeartBox
+              onClick={onClickHeart}
+              isLiked={isLiked}
+              title={"Like Photo"}
+            >
               <Heart />
             </HeartBox>
           )}
-          <ViewBox onClick={toggleModal}>
+          <ViewBox onClick={toggleModal} title={"View This"}>
             <View />
           </ViewBox>
         </Top>
