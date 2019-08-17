@@ -2,6 +2,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { toast } from "react-toastify";
+import { push } from "react-router-redux";
 
 // types
 export interface IDetailPhoto {
@@ -198,6 +199,36 @@ function deletePhoto(imageId: number) {
       .catch(err => console.log(err));
   };
 }
+function postPhoto(file: string, tags: any) {
+  const token = localStorage.getItem("jwt");
+  return (dispatch: Dispatch) => {
+    axios
+      .post(
+        "collects/post/",
+        {
+          file,
+          tags
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      .then(res => {
+        if (res.status === 201) {
+          toast.success("Post Success 💝");
+          setTimeout(() => {
+            dispatch(push("/"));
+          }, 2700);
+        } else {
+          toast.error(res.statusText);
+          console.log("error => ", res.status, res.statusText, res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
 
 // initialState
 const initialState = {
@@ -314,7 +345,8 @@ export const actionCreators = {
   detailPhoto,
   searchByTerm,
   followingsImage,
-  deletePhoto
+  deletePhoto,
+  postPhoto
 };
 // exports
 export default reducer;

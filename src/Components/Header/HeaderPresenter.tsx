@@ -68,6 +68,9 @@ const ExButton = styled(Button)`
     border-color: ${Theme.blackFontColor};
     color: ${Theme.blackFontColor};
   }
+  &:focus {
+    outline: none;
+  }
 `;
 const TopThird = styled.div`
   display: flex;
@@ -190,14 +193,16 @@ const HeaderPresenter: React.SFC<IProps> = ({
           />
         </TopSecond>
         <TopThird>
-          <ExButton
-            width={"120px"}
-            textColor={Theme.greyFontColor}
-            text={"Submit a photo"}
-            textSize={"15px"}
-            bgColor={Theme.whiteFontColor}
-            onClick={null}
-          />
+          <Link to={"/post"}>
+            <ExButton
+              width={"120px"}
+              textColor={Theme.greyFontColor}
+              text={"Submit a photo"}
+              textSize={"15px"}
+              bgColor={Theme.whiteFontColor}
+              onClick={null}
+            />
+          </Link>
           <Link to={`/profile/${me.username}`}>
             <ExAvatar uri={me.avatar} />
           </Link>

@@ -267,7 +267,7 @@ class PhotoModalContainer extends React.Component<IProps, IState> {
                 <HeartBox
                   isLiked={photo.is_liked}
                   onClick={this.onClickHeart}
-                  title={"Like Photo"}
+                  title={photo.is_liked ? "Cancel Like" : "Like"}
                 >
                   <Heart />
                 </HeartBox>

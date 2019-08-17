@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Theme from "src/Styles/Theme";
+import Loader from "../Loader";
 
 const Container = styled.div`
   width: 160px;
@@ -52,7 +53,7 @@ const AvatarInput: React.SFC<IProps> = ({ uploading, fileUrl, onChange }) => {
       />
       <Image htmlFor={"avatar"}>
         {uploading ? (
-          "⏰"
+          <Loader />
         ) : (
           <img src={fileUrl || require("../../images/noPhoto.jpg")} />
         )}

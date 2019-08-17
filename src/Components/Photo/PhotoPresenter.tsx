@@ -113,7 +113,7 @@ const Photo: React.SFC<IProps> = ({
             <HeartBox
               onClick={onClickHeart}
               isLiked={isLiked}
-              title={"Like Photo"}
+              title={isLiked ? "Cancel Like" : "Like"}
             >
               <Heart />
             </HeartBox>

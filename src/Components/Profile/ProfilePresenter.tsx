@@ -170,7 +170,9 @@ const ProfilePresenter: React.SFC<IProps> = ({
                     <Link to={`/edit`}>
                       <MoreColumn>Edit Account</MoreColumn>
                     </Link>
-                    <MoreColumn>Submit a photo</MoreColumn>
+                    <Link to={"/post"}>
+                      <MoreColumn>Submit a photo</MoreColumn>
+                    </Link>
                     <MoreColumn onClick={logout}>Logout</MoreColumn>
                   </MoreBox>
                 </Popup>
